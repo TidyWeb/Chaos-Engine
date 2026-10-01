@@ -7,6 +7,7 @@
 <meta name="description" content="Upload a clean dataset and get back a realistically messy copy to practise cleaning, standardising and ETL on. Runs entirely in your browser.">
 <link rel="icon" type="image/png" href="tidyweb_logo.png">
 <link rel="stylesheet" href="style.css">
+<script>try{var t=localStorage.getItem("ce-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
 </head>
 <body>
 <div class="banner" role="note">
@@ -15,7 +16,7 @@
 </div>
 <div class="main">
 <aside id="side">
-  <div class="logo"><a class="brand" href="https://github.com/TidyWeb/Chaos-Engine" target="_blank" rel="noopener" title="Chaos Engine on GitHub (Tidy Web)"><img src="tidyweb_logo.png" alt="Tidy Web logo" width="44" height="44"></a>Chaos Engine</div>
+  <div class="logo"><a class="brand" href="https://github.com/TidyWeb/chaos-engine" target="_blank" rel="noopener" title="Chaos Engine on GitHub (Tidy Web)"><img src="tidyweb_logo.png" alt="Tidy Web logo" width="44" height="44"></a>Chaos Engine</div>
   <p class="tag">Real data is never perfect. Load a clean dataset, get back a realistically broken one.</p>
 
   <h4><span class="num">1</span> Your file</h4>
@@ -33,13 +34,14 @@
   <div id="colbox" hidden><h4>Columns</h4>
     <p class="hint">Chaos Engine guesses each column's type. Change a wrong guess before you press Create Chaos.</p>
     <div class="cols" id="cols"></div></div>
-  <div class="side-foot">A Tidy Web project<br><a href="https://github.com/TidyWeb/Chaos-Engine" target="_blank" rel="noopener">View the source on GitHub &rarr;</a></div>
+  <div class="side-foot">A Tidy Web project<br><a href="https://github.com/TidyWeb/chaos-engine" target="_blank" rel="noopener">View the source on GitHub &rarr;</a></div>
 </aside>
 <section>
   <div class="top">
     <button class="btn" id="toggleside" type="button" title="Show or hide the side panel">&#9776; Panel</button>
     <div class="titlebox"><h2 id="title">No file yet</h2><p id="sub"></p></div>
     <div class="chips" id="chips"></div>
+    <button class="btn" id="theme" type="button" data-tip="Switch between light and dark"></button>
   </div>
   <div id="msg"></div>
   <div class="actions" id="actions" hidden>
@@ -72,7 +74,7 @@
       Download the answer key afterwards to see exactly what was changed, row by row.
     </div>
   </div>
-  <div class="foot"><span id="hint"></span><a class="gh" href="https://github.com/TidyWeb/Chaos-Engine" target="_blank" rel="noopener">Tidy Web &middot; GitHub</a><span class="snip" id="snip" hidden></span></div>
+  <div class="foot"><span id="hint"></span><a class="gh" href="https://github.com/TidyWeb/chaos-engine" target="_blank" rel="noopener">Tidy Web &middot; GitHub</a><span class="snip" id="snip" hidden></span></div>
 </section>
 </div>
 <script type="module" src="app.js"></script>

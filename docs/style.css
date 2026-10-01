@@ -8,7 +8,8 @@
   --num:#5eead4;--date:#fbbf24;--bool:#c4b5fd;--textc:#a9b4c4;--idc:#f9a8d4;--ok:#4ade80;--bad:#f87171}}
 /* ink blue palette (chosen from design_prototypes, v2) */
 :root{--bg:#eef2fa;--panel:#ffffff;--line:#d3dcee;--text:#16213a;--dim:#5f6f8f;--accent:#2457d6;--accent-ink:#ffffff;--accent-soft:#dfe8fb;--hit:#fff0a6;--hit-ink:#5c4300;--row:#f5f8fd;--rowfault:#fde0c8;--warn-bg:#fff4cc;--warn-ink:#6b4a00;--warn-line:#f0d27a;--go-top:#5b8cf0;--go-bottom:#2457d6;--go-lip:#173a94;--go-ink:#ffffff;--accent2:#06b6d4}
-@media(prefers-color-scheme:dark){:root{--bg:#0d1320;--panel:#131b2c;--line:#243049;--text:#e5eaf5;--dim:#8d9bb8;--accent:#6aa2ff;--accent-ink:#071326;--accent-soft:#172647;--hit:#554712;--hit-ink:#ffe27a;--row:#101727;--rowfault:#4a2c14;--warn-bg:#3a320f;--warn-ink:#f6d978;--warn-line:#695a1a;--go-top:#8db8ff;--go-bottom:#3d7fe6;--go-lip:#2152a3;--go-ink:#071326;--accent2:#22d3ee}}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1320;--panel:#131b2c;--line:#243049;--text:#e5eaf5;--dim:#8d9bb8;--accent:#6aa2ff;--accent-ink:#071326;--accent-soft:#172647;--hit:#554712;--hit-ink:#ffe27a;--row:#101727;--rowfault:#4a2c14;--warn-bg:#3a320f;--warn-ink:#f6d978;--warn-line:#695a1a;--go-top:#8db8ff;--go-bottom:#3d7fe6;--go-lip:#2152a3;--go-ink:#071326;--accent2:#22d3ee}}
+:root[data-theme="dark"]{--bg:#0d1320;--panel:#131b2c;--line:#243049;--text:#e5eaf5;--dim:#8d9bb8;--accent:#6aa2ff;--accent-ink:#071326;--accent-soft:#172647;--hit:#554712;--hit-ink:#ffe27a;--row:#101727;--rowfault:#4a2c14;--warn-bg:#3a320f;--warn-ink:#f6d978;--warn-line:#695a1a;--go-top:#8db8ff;--go-bottom:#3d7fe6;--go-lip:#2152a3;--go-ink:#071326;--accent2:#22d3ee}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font-family:"DM Sans",system-ui,sans-serif;font-size:14px;height:100vh;display:flex;flex-direction:column;overflow:hidden}
 .banner{flex:none;background:var(--warn-bg);color:var(--warn-ink);border-bottom:1px solid var(--warn-line);padding:10px 20px;line-height:1.45}
@@ -72,7 +73,8 @@ tbody tr.rowfault td.idx{box-shadow:inset 3px 0 0 var(--bad)}
 .foot{padding:10px 24px 14px;color:var(--dim);font-size:12px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .snip{font-family:"DM Mono",monospace;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:5px 10px;color:var(--text)}
 .err{margin:12px 24px 0;padding:10px 14px;background:#fee2e2;color:#7f1d1d;border-radius:8px}
-@media(prefers-color-scheme:dark){.err{background:#4a1d1d;color:#fecaca}}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .err{background:#4a1d1d;color:#fecaca}}
+:root[data-theme="dark"] .err{background:#4a1d1d;color:#fecaca}
 .empty-state{margin:auto;max-width:560px;padding:40px 24px;text-align:center;color:var(--dim);line-height:1.55}
 .empty-state h3{color:var(--text);font-size:20px;margin:0 0 8px}
 .empty-state ol{text-align:left;margin:16px auto;padding-left:20px}
@@ -151,7 +153,8 @@ h4{margin:16px 0 6px}
 
 /* highlights re-tuned for the blue scheme: clean cyan for changed cells, clean violet for added rows */
 :root{--hit:#c9eefa;--hit-ink:#07435a;--hit-edge:#0891b2;--rowfault:#e4dcfa;--fault-edge:#7c3aed}
-@media(prefers-color-scheme:dark){:root{--hit:#164559;--hit-ink:#c4f3ff;--hit-edge:#22d3ee;--rowfault:#35325e;--fault-edge:#a78bfa}}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--hit:#164559;--hit-ink:#c4f3ff;--hit-edge:#22d3ee;--rowfault:#35325e;--fault-edge:#a78bfa}}
+:root[data-theme="dark"]{--hit:#164559;--hit-ink:#c4f3ff;--hit-edge:#22d3ee;--rowfault:#35325e;--fault-edge:#a78bfa}
 td.hit{box-shadow:inset 3px 0 0 var(--hit-edge)}
 tbody tr.rowfault td.idx{box-shadow:inset 3px 0 0 var(--fault-edge)}
 th.hit .n{box-shadow:inset 0 -2px 0 var(--hit-edge)}
@@ -189,3 +192,8 @@ th.hit .n{box-shadow:inset 0 -2px 0 var(--hit-edge)}
 .side-foot a,.foot a.gh{color:var(--accent);text-decoration:none}
 .side-foot a:hover,.foot a.gh:hover{text-decoration:underline}
 .foot a.gh{font-size:12px}
+
+:root{color-scheme:light}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark}}
+:root[data-theme="dark"]{color-scheme:dark}
+:root[data-theme="light"]{color-scheme:light}

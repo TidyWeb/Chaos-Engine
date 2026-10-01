@@ -212,3 +212,22 @@ $("toggleside").onclick = () => {
   const closed = document.body.classList.toggle("side-closed");
   try { localStorage.setItem("chaos-side", closed ? "closed" : "open"); } catch (e) {}
 };
+
+
+// Light / dark toggle. Follows the system until the user picks; the choice is remembered.
+(function () {
+  const btn = document.getElementById("theme");
+  const root = document.documentElement;
+  const dark = () => root.dataset.theme
+    ? root.dataset.theme === "dark"
+    : window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const label = () => { btn.textContent = dark() ? "\u2600 Light" : "\u263E Dark"; };
+  btn.addEventListener("click", () => {
+    const next = dark() ? "light" : "dark";
+    root.dataset.theme = next;
+    try { localStorage.setItem("ce-theme", next); } catch (e) {}
+    label();
+  });
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", label);
+  label();
+})();
