@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chaos Engine - make clean data realistically messy</title>
+<meta name="description" content="Upload a clean dataset and get back a realistically messy copy to practise cleaning, standardising and ETL on. Runs entirely in your browser.">
+<link rel="icon" type="image/png" href="tidyweb_logo.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="banner" role="note">
+  <b>File size limit:</b> this web version handles files up to <b>25&nbsp;MB and 100,000 rows</b> (200 columns).
+  Your file is processed on your own computer and is never uploaded. For bigger files, use the standalone app.
+</div>
+<div class="main">
+<aside id="side">
+  <div class="logo"><a class="brand" href="https://github.com/TidyWeb/Chaos-Engine" target="_blank" rel="noopener" title="Chaos Engine on GitHub (Tidy Web)"><img src="tidyweb_logo.png" alt="Tidy Web logo" width="44" height="44"></a>Chaos Engine</div>
+  <p class="tag">Real data is never perfect. Load a clean dataset, get back a realistically broken one.</p>
+
+  <h4><span class="num">1</span> Your file</h4>
+  <label class="drop" id="drop">
+    <input type="file" id="file" accept=".csv,.tsv,.txt,.tab,.dat,.json,.xlsx,.xlsm">
+    <b>Drop a file here, or click to choose</b>
+    CSV, TSV, text, JSON or Excel (.xlsx)
+  </label>
+  <button class="linkbtn" id="sample" type="button">or try a small sample file</button>
+  <div class="fileinfo" id="fileinfo"></div>
+  <div id="sheetbox" hidden><label for="sheet">Sheet</label><select id="sheet"></select></div>
+
+  <div id="sumbox" hidden><h4>What was broken</h4><div class="sum" id="sum"></div></div>
+
+  <div id="colbox" hidden><h4>Columns</h4>
+    <p class="hint">Chaos Engine guesses each column's type. Change a wrong guess before you press Create Chaos.</p>
+    <div class="cols" id="cols"></div></div>
+  <div class="side-foot">A Tidy Web project<br><a href="https://github.com/TidyWeb/Chaos-Engine" target="_blank" rel="noopener">View the source on GitHub &rarr;</a></div>
+</aside>
+<section>
+  <div class="top">
+    <button class="btn" id="toggleside" type="button" title="Show or hide the side panel">&#9776; Panel</button>
+    <div class="titlebox"><h2 id="title">No file yet</h2><p id="sub"></p></div>
+    <div class="chips" id="chips"></div>
+  </div>
+  <div id="msg"></div>
+  <div class="actions" id="actions" hidden>
+    <div class="stepswrap">
+    <div class="step"><span class="num">2</span>
+      <div class="field"><label>Amount of chaos</label>
+        <div class="seg" id="intensity"><button type="button" data-v="light">Light</button><button type="button" data-v="realistic" class="on">Realistic</button><button type="button" data-v="heavy">Heavy</button></div></div>
+      <div class="field"><label for="seed">Seed (any number)</label>
+        <input id="seed" title="The same file and seed always give the same mess" type="number" min="0" max="999999999" value="42"></div>
+    </div>
+    <div class="step"><span class="num">3</span>
+      <div class="field"><label>Download <span id="dlhint">(available after you create chaos)</span></label>
+        <div class="btns"><button class="btn" id="dl-csv" disabled>Messy file (CSV)</button><button class="btn" id="dl-xlsx" disabled>Messy file (Excel)</button><button class="btn" id="dl-key" disabled>Answer key (CSV)</button></div></div>
+    </div>
+    </div>
+    <button class="go" id="go" disabled>Create Chaos</button>
+  </div>
+  <div class="viewbar" id="viewbar" hidden>
+    <span class="vlabel">Showing the table as:</span>
+    <div class="tabs" id="view" role="tablist"><button type="button" data-v="original">Original file</button><button type="button" data-v="chaos" class="on">With chaos</button></div>
+    <span class="legend" id="legend"></span>
+  </div>
+  <div class="grid" id="grid">
+    <div class="empty-state">
+      <h3>Practise on data that fights back</h3>
+      Public datasets are usually already cleaned, which is not how real work looks.
+      <ol><li>Load any dataset you like (a Kaggle download, say).</li>
+        <li>Check the column types it guessed.</li>
+        <li>Press <b>Create Chaos</b>, then download the messy file and clean it up.</li></ol>
+      Download the answer key afterwards to see exactly what was changed, row by row.
+    </div>
+  </div>
+  <div class="foot"><span id="hint"></span><a class="gh" href="https://github.com/TidyWeb/Chaos-Engine" target="_blank" rel="noopener">Tidy Web &middot; GitHub</a><span class="snip" id="snip" hidden></span></div>
+</section>
+</div>
+<script type="module" src="app.js"></script>
+</body>
+</html>
