@@ -6,7 +6,7 @@
 <title>Chaos Engine - make clean data realistically messy</title>
 <meta name="description" content="Upload a clean dataset and get back a realistically messy copy to practise cleaning, standardising and ETL on. Runs entirely in your browser.">
 <link rel="icon" type="image/png" href="tidyweb_logo.png">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=20261016-swirl">
 <script>try{var t=localStorage.getItem("ce-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
 </head>
 <body>
@@ -57,7 +57,7 @@
         <div class="btns"><button class="btn" id="dl-csv" disabled>Messy file (CSV)</button><button class="btn" id="dl-xlsx" disabled>Messy file (Excel)</button><button class="btn" id="dl-key" disabled>Answer key (CSV)</button></div></div>
     </div>
     </div>
-    <button class="go" id="go" disabled>Create Chaos</button>
+    <div class="go-wrap"><canvas class="go-sparkles" aria-hidden="true"></canvas><button class="go" id="go" disabled>Create Chaos</button></div>
   </div>
   <div class="viewbar" id="viewbar" hidden>
     <span class="vlabel">Showing the table as:</span>
@@ -77,6 +77,6 @@
   <div class="foot"><span id="hint"></span><a class="gh" href="https://github.com/TidyWeb/chaos-engine" target="_blank" rel="noopener">Tidy Web &middot; GitHub</a><span class="snip" id="snip" hidden></span></div>
 </section>
 </div>
-<script type="module" src="app.js"></script>
+<script type="module" src="app.js?v=20261016-swirl"></script>
 </body>
 </html>

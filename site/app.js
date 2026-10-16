@@ -186,7 +186,7 @@ function refresh() {
   $("go").disabled = !(can && state.loaded);
   ["dl-csv", "dl-xlsx", "dl-key"].forEach((id) => $(id).disabled = !(can && state.chaos));
   $("file").disabled = !can; $("sample").disabled = !can;
-  $("go").innerHTML = FLAME + (state.busy ? "<span class=\"lbl\">Working&hellip;</span>" : "<span class=\"lbl\">Create<br>Chaos</span>");
+  $("go").innerHTML = FLAME + (state.busy ? "<span class=\"lbl\">Working&hellip;</span>" : "<span class=\"lbl\">Create<br> Chaos</span>");
   $("dlhint").textContent = state.chaos ? "" : "(available after you create chaos)";
 }
 render();
@@ -231,3 +231,80 @@ $("toggleside").onclick = () => {
   window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", label);
   label();
 })();
+
+
+// Decorative Sparkle Swirl. Dataset processing and the button's click handler stay separate.
+// Pause while hidden, disabled, off-screen, or when reduced motion is requested.
+{
+  const wrap = document.querySelector('.go-wrap');
+  const canvas = wrap.querySelector('canvas');
+  const ctx = canvas.getContext('2d');
+  if (ctx) {
+    const button = $('go');
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+    let phase = 0, last = 0, frame = 0, visible = false;
+    function point(a, rx, ry, tilt) {
+      const x = Math.cos(a) * rx, y = Math.sin(a) * ry;
+      return [x * Math.cos(tilt) - y * Math.sin(tilt), x * Math.sin(tilt) + y * Math.cos(tilt)];
+    }
+    function star(x, y, r, alpha) {
+      ctx.save(); ctx.translate(x, y); ctx.globalAlpha = alpha;
+      ctx.fillStyle = '#fff4cb'; ctx.shadowColor = '#ffc143'; ctx.shadowBlur = r * 3;
+      ctx.beginPath(); ctx.moveTo(0, -r);
+      ctx.quadraticCurveTo(r * .15, -r * .13, r, 0);
+      ctx.quadraticCurveTo(r * .15, r * .13, 0, r);
+      ctx.quadraticCurveTo(-r * .15, r * .13, -r, 0);
+      ctx.quadraticCurveTo(-r * .15, -r * .13, 0, -r);
+      ctx.fill(); ctx.restore();
+    }
+    function paint() {
+      const box = canvas.getBoundingClientRect(), dpr = Math.min(devicePixelRatio || 1, 2);
+      const w = box.width, h = box.height;
+      if (!w || !h) return;
+      if (canvas.width !== Math.round(w * dpr) || canvas.height !== Math.round(h * dpr)) {
+        canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+      }
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, h);
+      if (button.disabled) return;
+      ctx.translate(w / 2, h / 2 - 3.5);
+      const mobile = matchMedia('(max-width:700px)').matches;
+      const rx = mobile ? w / 2 - 14 : 98, ry = mobile ? 51 : 63, tilt = mobile ? -.08 : -.5;
+      const boost = button.matches(':hover, :focus-visible') ? 1.25 : 1;
+      // Two luminous trails and their leading stars follow the same tilted ellipse.
+      for (let k = 0; k < 2; k++) {
+        for (let j = 80; j >= 0; j--) {
+          const [x, y] = point(phase + k * Math.PI - j * .024, rx, ry, tilt);
+          ctx.globalAlpha = (1 - j / 81) * .8;
+          ctx.fillStyle = '#ffe595'; ctx.shadowColor = '#ffb124'; ctx.shadowBlur = 6;
+          ctx.beginPath(); ctx.arc(x, y, 1.05, 0, Math.PI * 2); ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+        star(...point(phase + k * Math.PI, rx, ry, tilt), 6.4 * boost, 1);
+      }
+      for (let i = 0; i < 12; i++) {
+        const a = i * 2.4 + phase * .12;
+        const p = point(a, mobile ? rx - 5 : 80 + i % 3 * 10, mobile ? 53 + i % 3 * 4 : 80 + i % 4 * 5, 0);
+        star(...p, (2 + 1.6 * Math.sin(phase * 2.4 + i) ** 4) * boost, .35 + .6 * Math.sin(phase * 1.4 + i) ** 2);
+      }
+    }
+    function animate(ms) {
+      frame = 0;
+      if (last) phase += Math.min((ms - last) / 1000, .05) * .95;
+      last = ms; paint();
+      frame = requestAnimationFrame(animate);
+    }
+    function sync() {
+      cancelAnimationFrame(frame); frame = 0; last = 0;
+      paint();
+      if (visible && !document.hidden && !button.disabled && !reduced.matches) frame = requestAnimationFrame(animate);
+    }
+    new IntersectionObserver(entries => { visible = entries[0].isIntersecting; sync(); }).observe(wrap);
+    new MutationObserver(sync).observe(button, { attributes: true, attributeFilter: ['disabled'] });
+    new ResizeObserver(sync).observe(wrap);
+    reduced.addEventListener('change', sync);
+    document.addEventListener('visibilitychange', sync);
+    button.addEventListener('pointerenter', () => { if (reduced.matches) paint(); });
+    button.addEventListener('pointerleave', () => { if (reduced.matches) paint(); });
+    sync();
+  }
+}

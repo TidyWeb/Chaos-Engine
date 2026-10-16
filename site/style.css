@@ -197,3 +197,14 @@ th.hit .n{box-shadow:inset 0 -2px 0 var(--hit-edge)}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark}}
 :root[data-theme="dark"]{color-scheme:dark}
 :root[data-theme="light"]{color-scheme:light}
+
+/* Approved Sparkle Swirl: 58px extra inset, half the 116px button width. */
+.actions .go-wrap{position:relative;width:232px;height:190px;display:grid;place-items:center;justify-self:end;isolation:isolate}
+.actions .go-wrap button.go{margin:0 0 7px;justify-self:center}
+.go-sparkles{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:232px;height:224px;pointer-events:none;z-index:-1}
+.actions button.go:focus-visible{outline:3px solid var(--accent);outline-offset:9px}
+@media(max-width:700px){
+  .actions .go-wrap{width:100%;height:132px;justify-self:stretch}
+  .actions .go-wrap button.go{width:100%}
+  .go-sparkles{width:calc(100% + 32px);height:164px}
+}
