@@ -1,6 +1,6 @@
 # Chaos Engine
 
-## [🌐 Open the live site: https://tidyweb.github.io/Chaos-Engine/ ↗](https://tidyweb.github.io/Chaos-Engine/)
+### [Visit the live site ↗](https://tidyweb.github.io/Chaos-Engine/)
 
 
 Real data is never perfect. Chaos Engine takes a clean dataset and gives you back a realistically messy copy, so you can practise cleaning it.
